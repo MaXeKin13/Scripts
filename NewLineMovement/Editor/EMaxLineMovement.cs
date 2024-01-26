@@ -21,6 +21,15 @@ public class EMaxLineMovement : Editor
             _lineMovement.PathPoints[_lineMovement.currentPos].rotation = _lineMovement.transform.eulerAngles;
             SceneView.RepaintAll();
         }
+        //create new point AFTER currentPosition
+        if (GUILayout.Button("New Point"))
+        {
+            
+            //create new point from currentPos
+            MaxLineBezierMovement.PathPoint newPath = _lineMovement.PathPoints[_lineMovement.currentPos];
+            //insert point at next position
+            _lineMovement.PathPoints.Insert(_lineMovement.currentPos, newPath);
+        }
 
         if (GUILayout.Button("Set All Straight"))
         {
@@ -30,6 +39,8 @@ public class EMaxLineMovement : Editor
                 pathPoint.controlPoint2 = pathPoint.position;
             }
         }
+        
+        
     }
     private void OnSceneGUI()
     {
