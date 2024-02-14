@@ -82,6 +82,7 @@ public class MaxLineBezierMovement : MonoBehaviour
     {
         //starts at 1
         currentPos = 1;
+        transform.localScale = new Vector3(scale[0], scale[0], scale[0]);
         StartCoroutine(EndAnim());
     }
 
@@ -93,7 +94,7 @@ public class MaxLineBezierMovement : MonoBehaviour
     private IEnumerator EndAnim()
     {
 
-        transform.localScale = new Vector3(scale[0], scale[0], scale[0]);
+        
         //invoke onComplete if at first Pos
 
         if (currentPos == 1) { PathPoints[currentPos - 1].onComplete?.Invoke(); }
