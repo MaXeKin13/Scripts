@@ -93,28 +93,12 @@ public class MaxLineBezierMovement : MonoBehaviour
 
     private IEnumerator EndAnim()
     {
-
-
         //invoke onComplete if at first Pos
-
         if (currentPos == 1) { PathPoints[currentPos - 1].onComplete?.Invoke(); }
-
         //moves to next position
         {
             var initQuaternion = transform.rotation;
             yield return new WaitForSeconds(delay[currentPos]);
-            Vector3 startPosition = trans.position;
-            Vector3 controlPoint1 = PathPoints[currentPos].controlPoint1;
-            Vector3 controlPoint2;
-            if (currentPos - 1 >= 0)
-                controlPoint2 = PathPoints[currentPos - 1].controlPoint2;
-            else
-                controlPoint2 = PathPoints[0].controlPoint2;
-
-            //to do: convert position to local position
-
-            Vector3 endPosition = PathPoints[currentPos].position;
-
             float duration = timeToReach[currentPos];
             float elapsedTime = 0f;
 
@@ -161,8 +145,10 @@ public class MaxLineBezierMovement : MonoBehaviour
         //Finish
 
 
-        if (autoProceed)
+        if (autoProceed && currentPos != 1)
             ContinueAnim();
+        if (loop && currentPos == 1)
+            StartEndAnim();
     }
     //old manual way
     private Vector3 CalculateBezierPoint(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
