@@ -94,7 +94,7 @@ public class MaxLineBezierMovement : MonoBehaviour
     private IEnumerator EndAnim()
     {
 
-        
+
         //invoke onComplete if at first Pos
 
         if (currentPos == 1) { PathPoints[currentPos - 1].onComplete?.Invoke(); }
@@ -123,21 +123,19 @@ public class MaxLineBezierMovement : MonoBehaviour
 
             while (elapsedTime < duration)
             {
-                float t = elapsedTime / duration;
+                float t = (elapsedTime / duration);
 
-                // Calculate the speed dynamically based on the distance
-                float speed = Vector3.Distance(transform.position, PathPoints[currentPos].position) / duration;
 
                 // Quadratic Bezier interpolation for position// start pos is currentPos - 1
                 var pos = QuadraticLerp(PathPoints[currentPos - 1].position, PathPoints[currentPos - 1].controlPoint1,
                         PathPoints[currentPos].controlPoint2,
                         PathPoints[currentPos].position,
-                        t + Time.deltaTime * speed);
+                        t);
 
                 // Linear interpolation for rotation
-                var rot = Quaternion.Lerp(initQuaternion, Quaternion.Euler(PathPoints[currentPos].rotation), t + Time.deltaTime * speed);
+                var rot = Quaternion.Lerp(initQuaternion, Quaternion.Euler(PathPoints[currentPos].rotation), t);
 
-                elapsedTime += Time.deltaTime;
+                elapsedTime += Time.fixedDeltaTime;
 
                 // Move the object
                 transform.position = pos;
