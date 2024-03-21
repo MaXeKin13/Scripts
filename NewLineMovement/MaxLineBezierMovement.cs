@@ -23,7 +23,7 @@ public class MaxLineBezierMovement : MonoBehaviour
     private List<float> timeToReach;
     private List<Vector3> rotation;
 
-    private List<float> scale;
+    private List<Vector3> scale;
     private List<Ease> easeType;
     private List<UnityEvent> onComplete;
 
@@ -41,7 +41,7 @@ public class MaxLineBezierMovement : MonoBehaviour
         timeToReach = new List<float>();
 
         rotation = new List<Vector3>();
-        scale = new List<float>();
+        scale = new List<Vector3>();
 
 
         easeType = new List<Ease>();
@@ -82,7 +82,7 @@ public class MaxLineBezierMovement : MonoBehaviour
     {
         //starts at 1
         currentPos = 1;
-        transform.localScale = new Vector3(scale[0], scale[0], scale[0]);
+        transform.localScale = scale[0];
         StartCoroutine(EndAnim());
     }
 
@@ -192,10 +192,12 @@ public class MaxLineBezierMovement : MonoBehaviour
         public Vector3 controlPoint2;
         [Space] public Vector3 rotation;
         [Space]
+        [Tooltip("Delay before moving to THIS position")]
         public float delay;
+        [Tooltip("Time to reach THIS position")]
         public float timeToReach;
         [Space]
-        public float scale = 1f;
+        public Vector3 scale;
 
         public Ease easeType;
 
