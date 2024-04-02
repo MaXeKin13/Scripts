@@ -6,15 +6,11 @@ using UnityEngine.Events;
 public class AnimController : MonoBehaviour
 {
     public bool AnimEvent = false;
-    public UnityEvent animationEvent;
-    public void AnimationEvent()
+    public UnityEvent[] animationEvent;
+    public void AnimationEvent(int num)
     {
-        animationEvent?.Invoke();
+        animationEvent[num]?.Invoke();
     }
 
-    private void Update()
-    {
-        if(AnimEvent)
-            AnimationEvent();
-    }
+
 }
