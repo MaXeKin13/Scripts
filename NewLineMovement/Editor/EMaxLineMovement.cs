@@ -79,7 +79,9 @@ public class EMaxLineMovement : Editor
 
         foreach (var point in pathMovement.PathPoints)
         {
-            Handles.color = Color.cyan;
+            //set color.
+            Color col = (point == pathMovement.PathPoints[pathMovement.currentPos]) ? Color.red : Color.cyan;
+            Handles.color = col;
             Vector3 position = point.position;
             //Vector3 position = pathMovement.trans.transform.position;
             float handleSize = HandleUtility.GetHandleSize(position) * 0.2f;
