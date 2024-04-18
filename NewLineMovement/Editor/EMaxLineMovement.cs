@@ -64,6 +64,12 @@ public class EMaxLineMovement : Editor
         if (pathMovement.PathPoints == null)
             return;
 
+        //Style for label
+        GUIStyle labelStyle = new GUIStyle();
+        labelStyle.normal.textColor = Color.red;
+        labelStyle.fontSize = 18;
+
+        //
         for (var i = 0; i < pathMovement.PathPoints.Count - 1; i++)
         {
             var point = pathMovement.PathPoints[i];
@@ -75,13 +81,18 @@ public class EMaxLineMovement : Editor
                 Color.green,
                 Texture2D.normalTexture,
                 1f);
+
+
+            // Display point number
+            Handles.Label(point.position, i.ToString(), labelStyle);
         }
+        // Display number for the last point
+        Handles.Label(pathMovement.PathPoints[pathMovement.PathPoints.Count - 1].position,
+            (pathMovement.PathPoints.Count - 1).ToString(), labelStyle);
 
         foreach (var point in pathMovement.PathPoints)
         {
-            //set color.
-            Color col = (point == pathMovement.PathPoints[pathMovement.currentPos]) ? Color.red : Color.cyan;
-            Handles.color = col;
+            Handles.color = Color.cyan;
             Vector3 position = point.position;
             //Vector3 position = pathMovement.trans.transform.position;
             float handleSize = HandleUtility.GetHandleSize(position) * 0.2f;
