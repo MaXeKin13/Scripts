@@ -12,6 +12,7 @@ public class EMaxLineMovement : Editor
     //where buttons are in inspector
     public override void OnInspectorGUI()
     {
+        MaxLineBezierMovement pathMovement = (MaxLineBezierMovement)target;
         //
         DrawDefaultInspector();
         //Set current position to animation position
@@ -25,11 +26,11 @@ public class EMaxLineMovement : Editor
         //create new point AFTER currentPosition
         if (GUILayout.Button("New Point"))
         {
-
             //create new point from currentPos
             MaxLineBezierMovement.PathPoint newPath = _lineMovement.PathPoints[_lineMovement.currentPos];
             //insert point at next position
             _lineMovement.PathPoints.Insert(_lineMovement.currentPos, newPath);
+            SceneView.RepaintAll();
         }
 
         if (GUILayout.Button("Set All Straight"))
@@ -52,13 +53,34 @@ public class EMaxLineMovement : Editor
         }
 
 
+        //Handle Button Presses
+
+        //Unity's current event in the Event System
+        Event e = Event.current;
+        Debug.Log(e.ToString());
+        //check type of current event
+        switch (e.type)
+        {
+            //if current event is a keydown press event
+            case EventType.KeyDown:
+                {
+                    if (Event.current.keyCode == (KeyCode.RightArrow))
+                    {
+                        pathMovement.currentPos++;
+                    }
+                    if (Event.current.keyCode == KeyCode.LeftArrow)
+                    { pathMovement.currentPos--; }
+                    break;
+                }
+        }
+        //end 
 
 
     }
 
     private void OnSceneGUI()
     {
-        Debug.Log("SceneGUI");
+        //Debug.Log("SceneGUI");
         MaxLineBezierMovement pathMovement = (MaxLineBezierMovement)target;
 
         if (pathMovement.PathPoints == null)
@@ -68,8 +90,9 @@ public class EMaxLineMovement : Editor
         GUIStyle labelStyle = new GUIStyle();
         labelStyle.normal.textColor = Color.red;
         labelStyle.fontSize = 18;
-
         //
+
+        //Draw Line between points
         for (var i = 0; i < pathMovement.PathPoints.Count - 1; i++)
         {
             var point = pathMovement.PathPoints[i];
@@ -87,9 +110,11 @@ public class EMaxLineMovement : Editor
             Handles.Label(point.position, i.ToString(), labelStyle);
         }
         // Display number for the last point
-        Handles.Label(pathMovement.PathPoints[pathMovement.PathPoints.Count - 1].position,
-            (pathMovement.PathPoints.Count - 1).ToString(), labelStyle);
+        if (pathMovement.PathPoints.Count != 0)
+            Handles.Label(pathMovement.PathPoints[pathMovement.PathPoints.Count - 1].position,
+                (pathMovement.PathPoints.Count - 1).ToString(), labelStyle);
 
+        //Draw Disc at point locations
         foreach (var point in pathMovement.PathPoints)
         {
             Handles.color = Color.cyan;
@@ -104,6 +129,9 @@ public class EMaxLineMovement : Editor
             Vector3 forwardVector = rotation * Vector3.forward;
             Handles.DrawLine(point.position, point.position + forwardVector * 4);
         }
+
+
+
     }
 
     private void OnEnable()
