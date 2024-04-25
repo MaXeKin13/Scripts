@@ -93,8 +93,16 @@ public class MaxLineBezierMovement : MonoBehaviour
 
     private IEnumerator EndAnim()
     {
-        //invoke onComplete if at first Pos
-        if (currentPos == 1) { PathPoints[currentPos - 1].onComplete?.Invoke(); }
+
+        if (currentPos == 1)
+        {
+            //delay for first position
+            yield return new WaitForSeconds(delay[0]);
+            //invoke onComplete if at first Pos
+            PathPoints[currentPos - 1].onComplete?.Invoke();
+
+            trans.position = PathPoints[0].position;
+        }
         //moves to next position
         {
             var initQuaternion = transform.rotation;
@@ -203,5 +211,22 @@ public class MaxLineBezierMovement : MonoBehaviour
 
         public UnityEvent onComplete;
 
+        //used to create copy of any original referenced pathpoint
+        public static PathPoint ClonePathPoint(PathPoint original)
+        {
+            PathPoint newPoint = new PathPoint();
+
+            newPoint.position = original.position;
+            newPoint.controlPoint1 = original.controlPoint1;
+            newPoint.controlPoint2 = original.controlPoint2;
+            newPoint.rotation = original.rotation;
+            newPoint.delay = original.delay;
+            newPoint.timeToReach = original.timeToReach;
+            newPoint.scale = original.scale;
+            newPoint.easeType = original.easeType;
+            newPoint.onComplete = original.onComplete;
+
+            return newPoint;
+        }
     }
 }

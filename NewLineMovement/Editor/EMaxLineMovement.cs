@@ -27,7 +27,8 @@ public class EMaxLineMovement : Editor
         if (GUILayout.Button("New Point"))
         {
             //create new point from currentPos
-            MaxLineBezierMovement.PathPoint newPath = _lineMovement.PathPoints[_lineMovement.currentPos];
+
+            MaxLineBezierMovement.PathPoint newPath = MaxLineBezierMovement.PathPoint.ClonePathPoint(_lineMovement.PathPoints[_lineMovement.currentPos]);
             //insert point at next position
             _lineMovement.PathPoints.Insert(_lineMovement.currentPos, newPath);
             SceneView.RepaintAll();
