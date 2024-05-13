@@ -1,0 +1,7 @@
+Stored as Ints, and can be passed as such.
+
+can create variable of enum type in another script:
+	class Player
+		public enum Type {none, all}
+	class Player2
+		public Player.Type type2;
