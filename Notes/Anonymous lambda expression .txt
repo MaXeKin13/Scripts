@@ -1,0 +1,23 @@
+SELECT
+is anonymous function.
+ foods = GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
+
+foreach transform t, return the correspoinding Gameobject.
+
+
+write this INSTEAD OF 
+// Get all child transforms
+Transform[] childTransforms = GetComponentsInChildren<Transform>();
+
+// Create a list to store the corresponding GameObjects
+List<GameObject> childGameObjects = new List<GameObject>();
+
+// Iterate over each transform and add its corresponding GameObject to the list
+foreach (Transform childTransform in childTransforms)
+{
+    // Add the GameObject of the current transform to the list
+    childGameObjects.Add(childTransform.gameObject);
+}
+
+// Convert the list to an array
+foods = childGameObjects.ToArray();

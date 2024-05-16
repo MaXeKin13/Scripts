@@ -1,0 +1,8 @@
+Extension Methods enable you to "extend" existing types by adding new methods,
+as if they were part of the original.
+
+public static T GetComponentExtended<T>(this Transform tr) {
+	var p = tr.GetComponent<T>();
+	if (p != null) {
+		return p;
+	}

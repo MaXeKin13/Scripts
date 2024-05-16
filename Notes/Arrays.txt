@@ -1,0 +1,56 @@
+
+"for each child GameObject (c), check if it's not active in the hierarchy"
+transform.AllChildren(true).First(c => !c.gameObject.activeInHierarchy).gameObject.EnableSelf();
+
+c => !c
+iterates through Allchildren (in previous step) basically replaces foreach loop
+
+c represents each individual child GameObject in the collection of children
+
+=> "goes to"
+
+
+"Order all children (c) by their y position"
+transform.AllChildren(true).OrderBy(c => c.gameObject.transform.position.y);
+
+basically 
+foreach(c in allchildren)
+{ orderby code}
+
+
+So instead of writing
+private bool CheckChildInactive(Transform child)
+{
+  return !child.activeInHierarchy
+}
+
+and passing that method call as the parameter, you can just write a lambda
+c => !c.gameObject.activeInHierarchy
+
+WHERE
+bricks = stack.GetComponentsInChildren<Transform>()
+          .Where(child => child.CompareTag("Brick")) // (filters only objects with brick tag)
+          .OrderBy(child => child.position.y)
+          .ToArray();
+
+SELECT
+is anonymous function.
+ foods = GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
+
+foreach transform t, return the correspoinding Gameobject.
+write this INSTEAD OF 
+// Get all child transforms
+Transform[] childTransforms = GetComponentsInChildren<Transform>();
+
+// Create a list to store the corresponding GameObjects
+List<GameObject> childGameObjects = new List<GameObject>();
+
+// Iterate over each transform and add its corresponding GameObject to the list
+foreach (Transform childTransform in childTransforms)
+{
+    // Add the GameObject of the current transform to the list
+    childGameObjects.Add(childTransform.gameObject);
+}
+
+// Convert the list to an array
+foods = childGameObjects.ToArray();
