@@ -224,9 +224,12 @@ public class MaxLineBezierMovement : MonoBehaviour
             newPoint.timeToReach = original.timeToReach;
             newPoint.scale = original.scale;
             newPoint.easeType = original.easeType;
-            newPoint.onComplete = original.onComplete;
+
+            newPoint.onComplete = new UnityEvent();
 
             return newPoint;
         }
     }
+
+
 }
