@@ -1,3 +1,12 @@
+Func<int, int> square = x => x * 2;
+
+When you create a lambda expression in C#, it is compiled into an OBJECT that implements the DELEGATE type (in this case, Func<int, int>). This object can then be stored, passed around, or invoked just like any other object.
+
+Action sayHello = () => Console.WriteLine("Hello, World!");
+
+()=> means NO PARAMETERS
+
+
 SELECT
 is anonymous function.
  foods = GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
@@ -21,3 +30,8 @@ foreach (Transform childTransform in childTransforms)
 
 // Convert the list to an array
 foods = childGameObjects.ToArray();
+
+ DOTween.To(() => _renderer.GetBlendShapeWeight(i), (Gets the blend shape weight of i)
+            x => _renderer.SetBlendShapeWeight(i, x), (Sets blendshape to x, which is calculated between step 1 and 3)
+            100f,
+            delay).SetEase(Ease.Linear)
