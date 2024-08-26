@@ -1,0 +1,6 @@
+Public class DOX
+
+vs
+
+Public class DOX<T>
+	you can pass in ANY class

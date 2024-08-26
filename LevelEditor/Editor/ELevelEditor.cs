@@ -63,15 +63,7 @@ public class ELevelEditor : Editor
         GetCellSize();
         float boundsX = levelEditor.cellSize.x;
         float boundsY = levelEditor.cellSize.y;
-        /*for (int y = 0; y < collumnLength; y++)
-        {
-            //spawn collumn first
-            for (int x = 0; x < rowLength; x++)
-            {
-                grid[x, y] = Instantiate(block, new Vector3(transform.position.x, transform.position.y, 0f) + new Vector3(x * boundsX, y * boundsY, transform.position.z),
-                Quaternion.identity, transform);
-            }
-        }*/
+        //Vector3 position = levelEditor.GetPosition
 
 
         Quaternion blockRotation = levelEditor.transform.rotation;
@@ -81,7 +73,8 @@ public class ELevelEditor : Editor
         {
             for (int x = 0; x < levelEditor.rowLength; x++)
             {
-                Vector3 pos = new Vector3(x * boundsX * levelEditor.direction, y * boundsY, 0f);
+                Vector3 pos = levelEditor.GetPosition(levelEditor.dir, x, y);
+                //Vector3 pos = new Vector3(x * boundsX * levelEditor.direction, y * boundsY, 0f);
                 grid[x, y] = pos;
                 Handles.DrawWireCube(pos, levelEditor.cellSize);
             }

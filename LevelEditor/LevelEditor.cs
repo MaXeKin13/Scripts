@@ -21,6 +21,15 @@ public class LevelEditor : MonoBehaviour
     public GameObject[,] grid;
     //grid position can be different from grid value;
 
+    public enum Direction
+    {
+        up,
+        down,
+        forward,
+        back
+    }
+
+    public Direction dir = Direction.up;
 
     public void SetGrid()
     {
@@ -31,33 +40,25 @@ public class LevelEditor : MonoBehaviour
         //get size of block
         SetCellSize();
 
-        //set bounds
-        /*int boundsX = Mathf.RoundToInt(cellSize.x);
-        int boundsY = Mathf.RoundToInt(cellSize.y);
-        */
-        float boundsX = (cellSize.x);
-        float boundsY = (cellSize.y);
 
         for (int y = 0; y < collumnLength; y++)
         {
             //spawn collumn first
             for (int x = 0; x < rowLength; x++)
             {
-                /* //get rotation of level editor and instantiate from there?
-                 Vector3 pos = new Vector3(transform.position.x, transform.position.y, 0f) + new Vector3(x * boundsX * direction, y * boundsY, transform.position.z);
-                 //get rotation of object, apply it to an empty 
-                 //inverse transform/transform
-                 grid[x, y] = Instantiate(block, pos,
-                     Quaternion.identity, transform);          */
+                //ChangeWhere to Spawn depending on Axis
 
                 // Calculate local position relative to the transform's rotation
-                Vector3 localPos = new Vector3(x * boundsX * direction, y * boundsY, 0f);
+                Vector3 localPos = GetPosition(dir, x, y);
                 // Transform local position to world position
                 Vector3 pos = transform.TransformPoint(localPos);
                 grid[x, y] = Instantiate(block, pos, transform.rotation, transform);
             }
         }
     }
+
+
+
 
     public void RemoveGrid()
     {
@@ -72,7 +73,24 @@ public class LevelEditor : MonoBehaviour
     {
         cellSize = block.GetComponentInChildren<MeshRenderer>().bounds.size;
     }
+    public Vector3 GetPosition(Direction dir, int x, int y)
+    {
+        switch (dir)
+        {
+            case Direction.up:
+                return new Vector3(cellSize.x * x, y * cellSize.y, 0f);
+            case Direction.down:
+                return new Vector3(cellSize.x * x, cellSize.y * -y, 0f);
+            case Direction.forward:
+                return new Vector3(cellSize.x * x, 0, cellSize.z * y);
+            case Direction.back:
+                return new Vector3(cellSize.x * x, 0f, cellSize.z * -y);
+            default:
+                return new Vector3(cellSize.x * x, y * cellSize.y, 0f);
 
+        }
+
+    }
     //modularizing attempt
     public Vector3 GetGridPos(int x, int y)
     {
