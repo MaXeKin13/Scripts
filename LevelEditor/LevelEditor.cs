@@ -91,12 +91,5 @@ public class LevelEditor : MonoBehaviour
         }
 
     }
-    //modularizing attempt
-    public Vector3 GetGridPos(int x, int y)
-    {
-        int boundsX = Mathf.RoundToInt(cellSize.x);
-        int boundsY = Mathf.RoundToInt(cellSize.y);
-
-        return new Vector3(x * boundsX * direction, y * boundsY, 0f);
-    }
+    
 }
