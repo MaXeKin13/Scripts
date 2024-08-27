@@ -2,29 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public class MoveToPoint : MonoBehaviour
 {
+    public bool startOnAwake;
+    public bool loop;
+    public Transform finalPos;
+    [Space]
     public float moveSpeed = 5f;
     public float overallSpeedMult = 1f;
-    public AnimationCurve xMovementCurve;
-    public AnimationCurve zMovementCurve;
-    public AnimationCurve yMovementCurve;
+    public AnimationCurve xMovementCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    public AnimationCurve zMovementCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    public AnimationCurve yMovementCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
+    [Header("Events")]
+    [SerializeField] private UnityEvent onStart;
+    [SerializeField] private UnityEvent onFinish;
+
+    private Vector3 initialPos;
     private Coroutine moveToPointCoroutine;
 
+    private void Start()
+    {
+
+        initialPos = transform.position;
+        if (startOnAwake)
+            StartMoveToPoint(finalPos.position, finalPos.rotation);
+    }
     // = null means it is optional
-    public void StartMoveToPoint(Vector3 targetPos, Quaternion targetRot, Action onArrival = null)
+    public void StartMoveToPoint(Vector3 targetPos, Quaternion targetRot, Action onStart = null, Action onArrival = null)
     {
         if (moveToPointCoroutine != null)
         {
             StopCoroutine(moveToPointCoroutine);
         }
-        moveToPointCoroutine = StartCoroutine(MoveToPointCoroutine(targetPos, targetRot, onArrival));
+        moveToPointCoroutine = StartCoroutine(MoveToPointCoroutine(targetPos, targetRot, onStart, onArrival));
     }
 
-    private IEnumerator MoveToPointCoroutine(Vector3 targetPos, Quaternion targetRot, Action onArrival = null)
+    private IEnumerator MoveToPointCoroutine(Vector3 targetPos, Quaternion targetRot, Action onStart = null, Action onArrival = null)
     {
+        onStart?.Invoke();
         Vector3 startPos = transform.position;
         Quaternion startRot = transform.rotation;
         Vector3 startScale = transform.localScale;
@@ -60,6 +78,13 @@ public class MoveToPoint : MonoBehaviour
         onArrival?.Invoke();
 
         moveToPointCoroutine = null; // Reset coroutine reference when done
+
+        if (loop)
+        {
+            transform.position = startPos;
+            StartMoveToPoint(targetPos, targetRot, onArrival);
+        }
+
     }
 }
 
