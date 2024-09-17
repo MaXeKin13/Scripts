@@ -1,0 +1,7 @@
+Invoke((string)"MethodName", (float)delay);
+
+Calls method with name MethodName in delay seconds.
+
+DOVirtual.DelayedCall((float)delay, ()=>MethodName());
+
+calls MethodName in delay seconds

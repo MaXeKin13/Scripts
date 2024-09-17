@@ -1,0 +1,27 @@
+Instead of:
+
+private void Update()
+{
+    if (Input.GetMouseButtonDown(0) && !_hasClicked)
+    {
+        DoCode():
+    }
+}
+
+use:
+
+
+OnEnable()
+{
+    StartCoroutine(CheckForInput());
+}
+
+private IEnumerator CheckForInput()
+{
+    while (!Input.GetMouseButton(0))
+    {
+        yield return null;
+    }
+
+    DoCode();
+}
