@@ -158,6 +158,9 @@ public class MaxLineBezierMovement : MonoBehaviour
         if (loop && currentPos == 1)
             StartEndAnim();
     }
+
+    //TODO:
+    //Continue anim up until certain currentPos;
     //old manual way
     private Vector3 CalculateBezierPoint(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
