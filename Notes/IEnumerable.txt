@@ -1,0 +1,24 @@
+An Enumerator is an object that allows you to ITERATE through a collection. WITHOUT exposing the underlying structure.
+this is done by using Enumerator object, NOT the object type
+that is of the actual object.
+
+// The 'transform' can be iterated over, but this collection is not strongly typed.
+IEnumerable childObjects = transform;
+
+thus, all the objects in transform aren't of type transform,
+but of type Enumerable.
+(Transform in unity also can act as an Enumerator, so this is a bad example)
+
+instead, use this:
+
+Example:
+Transform[] childs2 = transform.Cast<Transform>().ToArray();
+
+
+TO MY UNDERSTANDING:
+in the above example, "transform" is acting as an Enumerator
+
+foreach()
+implicitely uses Enumerators
+
+

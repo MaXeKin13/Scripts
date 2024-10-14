@@ -1,6 +1,7 @@
 
 "for each child GameObject (c), check if it's not active in the hierarchy"
-transform.AllChildren(true).First(c => !c.gameObject.activeInHierarchy).gameObject.EnableSelf();
+Transform[] AllChildren;
+AllChildren.First(c => !c.gameObject.activeInHierarchy).gameObject.EnableSelf();
 
 c => !c
 iterates through Allchildren (in previous step) basically replaces foreach loop
