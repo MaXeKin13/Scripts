@@ -1,8 +1,19 @@
 Extension Methods enable you to "extend" existing types by adding new methods,
 as if they were part of the original.
 
-public static T GetComponentExtended<T>(this Transform tr) {
-	var p = tr.GetComponent<T>();
-	if (p != null) {
-		return p;
-	}
+
+this is done by:
+	Static Method inside a Static Class.
+	the 'this' keyword before the first parameter
+
+Example:
+
+public static Transform[] AllChildren(this Transform tr, bool includeInactive) {
+	if (tr.Children() == null) return null;
+
+	return tr.GetComponentsInChildren<Transform>(includeInactive);
+}
+
+this adds AllChildren() to the base functionality of Transform, because of the 'this' infront of it/
+to access:
+	transform.AllChildrent(true)
