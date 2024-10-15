@@ -1,0 +1,9 @@
+for inputs can have a default value, so you can call the method without NEEDING to give an input.
+
+default values need to be at the end of the input list.
+
+example:
+
+Activate();
+
+public void Activate(bool openEndCard = false)
