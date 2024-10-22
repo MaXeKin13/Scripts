@@ -234,5 +234,47 @@ public class MaxLineBezierMovement : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+
+    [HideInInspector]
+    public bool _tracking = false;
+    //Move ALL pathpoints locally based on DIFFERENCE between initial Position, and pos when you click "Stop Tracking" 
+    public void UnlockPos()
+    {
+        //set position to first pos
+        trans.position = PathPoints[0].position;
+
+        _tracking = true;
+        Vector3 initialPos = trans.position;
+        Vector3 newPos = trans.position;
+
+        StartCoroutine(TrackPosition());
+        IEnumerator TrackPosition()
+        {
+            while (_tracking)
+            {
+                Debug.Log("Tracking");
+                newPos = trans.position;
+                yield return null;
+            }
+            //get difference in position
+            Vector3 offset = newPos - initialPos;
+            //apply offset to all pathpoints
+            foreach (PathPoint pathPoint in PathPoints)
+            {
+                pathPoint.position += offset;
+                pathPoint.controlPoint1 += offset;
+                pathPoint.controlPoint2 += offset;
+            }
+        }
+
+        
+        
+    }
+    public void LockPos()
+    {
+        _tracking = false;
+    }
+#endif
 
 }

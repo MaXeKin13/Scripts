@@ -27,7 +27,7 @@ public class EMaxUILineMovement : Editor
         if (GUILayout.Button("New Point"))
         {
             //create new point from currentPos
-           
+
             MaxUILineMovement.PathPoint newPath = MaxUILineMovement.PathPoint.ClonePathPoint(_lineMovement.PathPoints[_lineMovement.currentPos]);
             //insert point at next position
             _lineMovement.PathPoints.Insert(_lineMovement.currentPos, newPath);
@@ -47,7 +47,7 @@ public class EMaxUILineMovement : Editor
 
         if (GUILayout.Button("Move To Position"))
         {
-            _lineMovement.trans.position = _lineMovement.PathPoints[_lineMovement.currentPos].position;
+            _lineMovement.trans.anchoredPosition = _lineMovement.PathPoints[_lineMovement.currentPos].position;
             _lineMovement.transform.eulerAngles = _lineMovement.PathPoints[_lineMovement.currentPos].rotation;
             _lineMovement.transform.localScale = _lineMovement.PathPoints[_lineMovement.currentPos].scale;
 

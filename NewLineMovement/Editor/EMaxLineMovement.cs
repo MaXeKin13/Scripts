@@ -53,12 +53,34 @@ public class EMaxLineMovement : Editor
 
         }
 
+        GUILayout.Space(10);
+
+
+
+
+
+        //Tracking Code
+        if (_lineMovement._tracking)
+        {
+            if (GUILayout.Button("Stop Tracking"))
+            {
+                _lineMovement.LockPos();
+            }
+
+        }
+        else
+        {
+            if (GUILayout.Button("Start Tracking"))
+            {
+                _lineMovement.UnlockPos();
+            }
+        }
 
         //Handle Button Presses
 
         //Unity's current event in the Event System
         Event e = Event.current;
-        Debug.Log(e.ToString());
+        //Debug.Log(e.ToString());
         //check type of current event
         switch (e.type)
         {
@@ -144,4 +166,6 @@ public class EMaxLineMovement : Editor
 
         }
     }
+
+
 }
