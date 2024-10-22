@@ -1,0 +1,19 @@
+
+
+public static T OnComplete<T>(this T t, TweenCallback action) where T : Tween
+{
+    if (t == null || !t.active)
+    {
+        return t;
+    }
+
+    t.onComplete = action;
+    return t;
+}
+
+
+"where T : Tween" 
+A constraint that allows the subclass that calls this method to be returned, NOT the "Tween" base class, it can be any class that inherits from it.
+
+"T OnComplete<T>(this T t"
+This WOULD be an extension method for ALL objects, if not for the filter above

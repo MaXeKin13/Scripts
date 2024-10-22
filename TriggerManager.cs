@@ -8,6 +8,7 @@ public class TriggerManager : MonoBehaviour
 {
     public string tag;
     public UnityEvent enterTrigger;
+    public UnityEvent exitTrigger;
     public UnityEvent delayTrigger;
 
     public float delay;
@@ -18,6 +19,14 @@ public class TriggerManager : MonoBehaviour
         {
             enterTrigger?.Invoke();
             StartCoroutine(delayInvoke());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.transform.CompareTag(tag))
+        {
+            exitTrigger?.Invoke();
         }
     }
 
