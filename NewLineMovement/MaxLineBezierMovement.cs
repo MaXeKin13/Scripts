@@ -248,6 +248,12 @@ public class MaxLineBezierMovement : MonoBehaviour
         Vector3 initialPos = trans.position;
         Vector3 newPos = trans.position;
 
+        Quaternion initialRot = trans.rotation;
+        Quaternion newRot = trans.rotation;
+
+        Vector3 initialScale = trans.localScale;
+        Vector3 newScale = trans.localScale;
+
         StartCoroutine(TrackPosition());
         IEnumerator TrackPosition()
         {
@@ -255,16 +261,34 @@ public class MaxLineBezierMovement : MonoBehaviour
             {
                 Debug.Log("Tracking");
                 newPos = trans.position;
+                newRot = trans.rotation;
+                newScale = trans.localScale;
                 yield return null;
             }
             //get difference in position
             Vector3 offset = newPos - initialPos;
+            //Get Rotation Difference
+            Quaternion rotDiff = newRot * Quaternion.Inverse(initialRot);
+            //rotation difference in angles
+            Vector3 rotOffset = rotDiff.eulerAngles;
+            //Get difference in scale
+            Vector3 scaleOffset = newScale - initialScale;
             //apply offset to all pathpoints
             foreach (PathPoint pathPoint in PathPoints)
             {
                 pathPoint.position += offset;
                 pathPoint.controlPoint1 += offset;
                 pathPoint.controlPoint2 += offset;
+
+                /*Quaternion A = Quaternion.identity * Quaternion.Inverse(initialRot);
+                Quaternion B = Quaternion.identity * Quaternion.Inverse(newRot);
+                Quaternion rotOffset = B * Quaternion.Inverse(initialRot);*/
+
+                
+                pathPoint.rotation += rotOffset;
+
+                pathPoint.scale += scaleOffset;
+                //pathPoint.rotation = 
             }
         }
 
