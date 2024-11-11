@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TriggerManager : MonoBehaviour
 {
-    public string tag;
+    public string triggerTag;
     public UnityEvent enterTrigger;
     public UnityEvent exitTrigger;
     public UnityEvent delayTrigger;
@@ -15,7 +15,7 @@ public class TriggerManager : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag(tag))
+        if (other.transform.CompareTag( ))
         {
             enterTrigger?.Invoke();
             StartCoroutine(delayInvoke());
@@ -24,7 +24,7 @@ public class TriggerManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.transform.CompareTag(tag))
+        if(other.transform.CompareTag(triggerTag))
         {
             exitTrigger?.Invoke();
         }
