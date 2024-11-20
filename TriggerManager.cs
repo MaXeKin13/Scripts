@@ -15,7 +15,7 @@ public class TriggerManager : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag( ))
+        if (other.transform.CompareTag(triggerTag))
         {
             enterTrigger?.Invoke();
             StartCoroutine(delayInvoke());
