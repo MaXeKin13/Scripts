@@ -1,3 +1,9 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using UnityEngine;
+
 public class WorldToCanvas : MonoBehaviour
 {
     [field: SerializeField] private Camera cam;    // Camera containing the canvas
