@@ -20,9 +20,6 @@ public class Player : MonoBehaviour
     }
 
 
-    private void ChangeState()
-    {
-        stateMachine.SetState(new State2());
-    }
+    
 
 }
