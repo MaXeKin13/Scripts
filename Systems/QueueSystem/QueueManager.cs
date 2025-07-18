@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class QueueManager : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class QueueManager : MonoBehaviour
     //test
     public List<Queuer> allQueuers = new List<Queuer>();
     //end test
-    public List<Queuer> queuers = new List<Queuer>();
+    private List<Queuer> queuers = new List<Queuer>();
 
     //destinations? destination types?
 
@@ -30,7 +29,6 @@ public class QueueManager : MonoBehaviour
             
             foreach(Queuer queuer in allQueuers)
             {
-                Debug.Log("Move to Spot");
                 queuer.MoveToOpenQueueSpot(this);
             }
         }

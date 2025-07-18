@@ -6,27 +6,25 @@ using UnityEngine.AI;
 
 public class Queuer : MonoBehaviour
 {
-    [SerializeField] private Animator hoboAnimator;
+    [SerializeField] private Animator anim;
 
     private NavMeshAgent agent;
     private static readonly int Spead = Animator.StringToHash("Spead");
-    private static readonly int UaSleep = Animator.StringToHash("UASleep");
+    //private static readonly int UaSleep = Animator.StringToHash("UASleep");
 
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        if (hoboAnimator == null)
+        /*if (anim == null)
         {
-            hoboAnimator = GetComponent<Animator>();
-        }
+            anim = GetComponent<Animator>();
+        }*/
     }
     public void MoveToOpenQueueSpot(QueueManager queue)
     {
         queue.AddQueuer(this);
         agent.SetDestination(queue.GetOpenPoint());
-        Debug.Log("Move to spot 2");
-        Debug.Log(agent.SetDestination(queue.GetOpenPoint()));
     }
 
     public void MoveToDestination(Vector3 target)
@@ -36,7 +34,7 @@ public class Queuer : MonoBehaviour
 
     private void Update()
     {
-        hoboAnimator.SetFloat(Spead, agent.velocity.magnitude);    
+        //anim?.SetFloat(Spead, agent.velocity.magnitude);    
     }
     private bool HasReachedDestination()
     {
