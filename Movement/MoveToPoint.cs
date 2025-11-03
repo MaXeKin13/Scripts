@@ -8,6 +8,7 @@ public class MoveToPoint : MonoBehaviour
 {
     public bool startOnAwake;
     public bool loop;
+    public bool returnToStartOnFinish;
     public Transform finalPos;
     [Space]
     public float moveSpeed = 5f;
@@ -81,8 +82,24 @@ public class MoveToPoint : MonoBehaviour
 
         if (loop)
         {
-            transform.position = startPos;
-            StartMoveToPoint(targetPos, targetRot, onArrival);
+            yield return null;
+            if (!returnToStartOnFinish)
+            {
+                transform.position = startPos;
+                StartMoveToPoint(targetPos, targetRot, onArrival);
+            }
+            else
+            {
+               
+                if (transform.position != initialPos)
+                {
+                    StartMoveToPoint(initialPos, startRot, onArrival);
+                }
+                else
+                {
+                    StartMoveToPoint(finalPos.position, targetRot, onArrival);
+                }
+            }
         }
 
     }
