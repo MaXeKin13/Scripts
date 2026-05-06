@@ -27,6 +27,8 @@ public class CinemachineDollySpawner : MonoBehaviour
     [Tooltip("Local offset from the spline position")]
     public Vector3 positionOffset = Vector3.zero;
 
+    [Header("Snap to Terrain")]
+    public bool snapToTerrain = false;
     // Holds all spawned instances so we can clear them on refresh
     private readonly List<GameObject> _spawnedObjects = new List<GameObject>();
 
@@ -83,9 +85,10 @@ public class CinemachineDollySpawner : MonoBehaviour
             {
 
                 instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, transform);
-                Debug.Log(instance.name);
                 if (instance != null)
                     instance.transform.SetPositionAndRotation(position, finalRot);
+
+
             }
 #else
             GameObject instance = Instantiate(prefab, position, finalRot, transform);
@@ -95,6 +98,32 @@ public class CinemachineDollySpawner : MonoBehaviour
                 instance.hideFlags = HideFlags.DontSave;
                 _spawnedObjects.Add(instance);
             }
+
+
+
+            if (snapToTerrain)
+            {
+                // Cast downward from above the object to find the terrain surface
+                Vector3 rayOrigin = instance.transform.position + Vector3.up * 100f;
+
+                if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 200f))
+                {
+                    Vector3 snappedPos = hit.point;
+
+                    if (alignToSpline)
+                    {
+                        // Optionally align Y-axis to terrain normal, keep spline forward
+                        Quaternion terrainRot = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                        instance.transform.SetPositionAndRotation(snappedPos, terrainRot * finalRot);
+                    }
+                    else
+                    {
+                        instance.transform.position = snappedPos;
+                    }
+                }
+            }
+
+
         }
     }
 
